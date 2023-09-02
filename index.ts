@@ -9,14 +9,16 @@ const source = timer(0, 1000);
 const example = source.pipe(
   //close window every 5s and emit observable of collected values from source
   windowWhen(() => interval(5000)),
-  tap(_ => console.log('NEW WINDOW!'))
+  tap((_) => console.log('NEW WINDOW!'))
 );
 
 const subscribeTwo = example
   .pipe(
     //window emits nested observable
     mergeAll()
-    /*
+  )
+  .subscribe((val) => console.log(val));
+/*
       output:
       "NEW WINDOW!"
       0
@@ -30,6 +32,4 @@ const subscribeTwo = example
       7
       8
       9
-    */
-  )
-  .subscribe(val => console.log(val));
+*/
